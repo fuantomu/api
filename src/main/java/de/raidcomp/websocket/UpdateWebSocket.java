@@ -20,7 +20,7 @@ import org.json.JSONObject;
 
 import java.util.UUID;
 
-@ServerWebSocket("/ws/update")
+@ServerWebSocket("/wss/update")
 public class UpdateWebSocket {
 
   private static final Logger LOG = LoggerFactory.getLogger(UpdateWebSocket.class);
