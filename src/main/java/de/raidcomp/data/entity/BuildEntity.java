@@ -15,8 +15,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@MappedEntity("Build")
-@Table(name = "Build")
+@MappedEntity("build")
+@Table(name = "build")
 @Serdeable
 @Entity
 public class BuildEntity {

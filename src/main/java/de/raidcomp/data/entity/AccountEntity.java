@@ -11,8 +11,8 @@ import jakarta.persistence.Entity;
 
 @Getter
 @Setter
-@MappedEntity("Account")
-@Table(name = "Account")
+@MappedEntity("account")
+@Table(name = "account")
 @Serdeable
 @Entity
 public class AccountEntity {

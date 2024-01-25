@@ -14,8 +14,8 @@ import jakarta.persistence.Entity;
 
 @Getter
 @Setter
-@MappedEntity("Message")
-@Table(name = "Message")
+@MappedEntity("message")
+@Table(name = "message")
 @Entity
 @Serdeable
 public class MessageEntity {

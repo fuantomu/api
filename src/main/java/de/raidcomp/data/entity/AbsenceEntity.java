@@ -11,8 +11,8 @@ import jakarta.persistence.Entity;
 
 @Getter
 @Setter
-@MappedEntity("Absence")
-@Table(name = "Absence")
+@MappedEntity("absence")
+@Table(name = "absence")
 @Serdeable
 @Entity
 public class AbsenceEntity {

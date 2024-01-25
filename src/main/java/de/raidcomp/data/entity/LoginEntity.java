@@ -11,8 +11,8 @@ import jakarta.persistence.Entity;
 
 @Getter
 @Setter
-@MappedEntity("Login")
-@Table(name = "Login")
+@MappedEntity("login")
+@Table(name = "login")
 @Serdeable
 @Entity
 public class LoginEntity {
