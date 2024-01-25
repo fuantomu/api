@@ -10,7 +10,7 @@ import jakarta.validation.constraints.NotNull;
 
 @Serdeable
 public record UpdateDto(
-    @NotNull List<BuildEntity> builds,
-    @NotNull List<PlayerEntity> players,
-    @NotNull List<AbsenceEntity> absences) {
+        @NotNull List<BuildEntity> builds,
+        @NotNull List<PlayerEntity> players,
+        @NotNull List<AbsenceEntity> absences) {
 }

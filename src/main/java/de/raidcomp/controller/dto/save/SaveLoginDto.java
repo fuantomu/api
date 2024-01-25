@@ -5,5 +5,5 @@ import io.micronaut.serde.annotation.Serdeable;
 
 @Serdeable
 @Introspected
-public record SaveLoginDto(Integer role) {
+public record SaveLoginDto(Integer role, String username) {
 }

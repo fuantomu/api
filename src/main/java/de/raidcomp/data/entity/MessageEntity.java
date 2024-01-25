@@ -1,5 +1,8 @@
 package de.raidcomp.data.entity;
 
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
 import io.micronaut.data.annotation.MappedEntity;
 import io.micronaut.serde.annotation.Serdeable;
 import lombok.Getter;
@@ -11,19 +14,20 @@ import jakarta.persistence.Entity;
 
 @Getter
 @Setter
-@MappedEntity("Absence")
-@Table(name = "Absence")
-@Serdeable
+@MappedEntity("Message")
+@Table(name = "Message")
 @Entity
-public class AbsenceEntity {
+@Serdeable
+public class MessageEntity {
   @Id
   private String id;
 
-  private String player_id;
+  private String message_type;
 
-  private long start_date;
+  @JdbcTypeCode(SqlTypes.LONGVARCHAR)
+  private String data;
 
-  private long end_date;
+  private String account_name;
 
-  private String reason;
+  private Long date;
 }

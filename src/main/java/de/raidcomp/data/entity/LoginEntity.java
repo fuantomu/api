@@ -22,4 +22,6 @@ public class LoginEntity {
   private Long created_date;
 
   private Integer role;
+
+  private String username;
 }

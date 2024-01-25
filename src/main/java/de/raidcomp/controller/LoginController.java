@@ -25,9 +25,9 @@ public class LoginController {
   public LoginDto getLoginAge(String host) {
     Optional<LoginEntity> userLogin = loginRepository.findById(host);
     if (!userLogin.isEmpty()) {
-      return new LoginDto(userLogin.get().getCreated_date(), userLogin.get().getRole());
+      return new LoginDto(userLogin.get().getCreated_date(), userLogin.get().getRole(), userLogin.get().getUsername());
     }
-    return new LoginDto((long) 0, -1);
+    return new LoginDto((long) 0, -1, "");
   }
 
   @Post("/{host}")
@@ -37,6 +37,7 @@ public class LoginController {
     userLogin.setHost(host);
     userLogin.setCreated_date(System.currentTimeMillis());
     userLogin.setRole(body.role());
+    userLogin.setUsername(body.username());
 
     Optional<LoginEntity> existingLogin = loginRepository.findById(host);
     if (existingLogin.isEmpty()) {

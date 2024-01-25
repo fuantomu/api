@@ -6,5 +6,6 @@ import jakarta.validation.constraints.NotNull;
 @Serdeable
 public record LoginDto(
     @NotNull Long created_date,
-    @NotNull Integer role) {
+    @NotNull Integer role,
+    @NotNull String username) {
 }
