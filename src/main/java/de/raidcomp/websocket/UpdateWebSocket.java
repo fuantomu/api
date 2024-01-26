@@ -50,6 +50,9 @@ public class UpdateWebSocket {
       WebSocketSession session) {
 
     log("onMessage", session);
+    if (message.equals("Ping")) {
+      return broadcaster.broadcast("Pong");
+    }
     MessageEntity newMessage = new MessageEntity();
     JSONObject messageObject = new JSONObject(message);
 
