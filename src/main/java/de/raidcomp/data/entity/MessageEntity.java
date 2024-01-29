@@ -30,4 +30,6 @@ public class MessageEntity {
   private String account_name;
 
   private Long date;
+
+  private String version;
 }

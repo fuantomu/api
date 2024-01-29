@@ -33,6 +33,10 @@ public class UpdateController {
     AbsenceController absenceController = new AbsenceController(absenceRepository);
     List<BuildEntity> builds = buildController.listAllBuilds();
     List<PlayerEntity> players = playerController.getPlayers();
+    for (BuildEntity build : builds) {
+      build.setPlayers("");
+    }
+    ;
     List<AbsenceEntity> absences = absenceController.getAbsences();
     return new UpdateDto(builds, players, absences);
   }

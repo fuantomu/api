@@ -56,11 +56,12 @@ public class UpdateWebSocket {
     MessageEntity newMessage = new MessageEntity();
     JSONObject messageObject = new JSONObject(message);
 
-    newMessage.setAccount_name(messageObject.optString("account_name", "system"));
+    newMessage.setAccount_name(messageObject.optString("account_name", "System"));
     newMessage.setData(messageObject.get("data").toString());
     newMessage.setDate(Long.parseLong(messageObject.optString("date", String.valueOf(System.currentTimeMillis()))));
     newMessage.setMessage_type(messageObject.get("message_type").toString());
     newMessage.setId(UUID.randomUUID().toString());
+    newMessage.setVersion(messageObject.optString("version", "System"));
     messageRepository.save(newMessage);
     // messageHistory.add(message);
     return broadcaster.broadcast(String.format("%s", message));
