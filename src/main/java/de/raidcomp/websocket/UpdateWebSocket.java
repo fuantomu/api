@@ -35,13 +35,8 @@ public class UpdateWebSocket {
   }
 
   @OnOpen
-  public Publisher<String> onOpen(WebSocketSession session) {
+  public void onOpen(WebSocketSession session) {
     log("onOpen", session);
-    return broadcaster.broadcast("{\"message_type\":\"update\"}");
-    // return
-    // broadcaster.broadcast(String.format("{\"messageType\":\"update\",\"data\":%s}",
-    // messageHistory.subList(Math.max(messageHistory.size() - 20, 0),
-    // messageHistory.size())));
   }
 
   @OnMessage
@@ -51,7 +46,7 @@ public class UpdateWebSocket {
 
     log("onMessage", session);
     if (message.equals("Ping")) {
-      return broadcaster.broadcast("Pong");
+      return broadcaster.broadcast("{\"message_type\": \"heartbeat\"}");
     }
     MessageEntity newMessage = new MessageEntity();
     JSONObject messageObject = new JSONObject(message);
