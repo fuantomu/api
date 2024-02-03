@@ -18,7 +18,7 @@ public class MessageController {
 
   @Get("/{amount}")
   public List<MessageEntity> getMessages(int amount) {
-    List<MessageEntity> messageList = messageRepository.findAll();
+    List<MessageEntity> messageList = messageRepository.listOrderByDateDesc();
     return messageList.subList(0, Math.min(messageList.size(), amount));
   }
 
