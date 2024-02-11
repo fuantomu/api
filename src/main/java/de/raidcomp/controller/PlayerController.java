@@ -37,6 +37,7 @@ public class PlayerController {
 
   @Get("/delete/{playerId}")
   public void deletePlayer(String playerId) {
+    System.out.println(playerId);
     playerRepository.deleteById(playerId);
   }
 

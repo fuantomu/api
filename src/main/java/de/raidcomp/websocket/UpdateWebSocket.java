@@ -1,12 +1,15 @@
 package de.raidcomp.websocket;
 
-//import java.util.ArrayList;
-//import java.util.List;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.gson.Gson;
+
+import de.raidcomp.controller.dto.UserDto;
 import de.raidcomp.data.entity.MessageEntity;
 import de.raidcomp.data.repository.MessageRepository;
 import io.micronaut.websocket.WebSocketBroadcaster;
@@ -24,10 +27,11 @@ import java.util.UUID;
 public class UpdateWebSocket {
 
   private static final Logger LOG = LoggerFactory.getLogger(UpdateWebSocket.class);
-  // private List<String> messageHistory = new ArrayList<String>();
 
   private final WebSocketBroadcaster broadcaster;
   private final MessageRepository messageRepository;
+
+  private List<UserDto> users = new ArrayList<UserDto>();
 
   public UpdateWebSocket(WebSocketBroadcaster broadcaster, MessageRepository messageRepository) {
     this.broadcaster = broadcaster;
@@ -35,8 +39,12 @@ public class UpdateWebSocket {
   }
 
   @OnOpen
-  public void onOpen(WebSocketSession session) {
+  public Publisher<MessageEntity> onOpen(WebSocketSession session) {
     log("onOpen", session);
+    MessageEntity newMessage = new MessageEntity();
+    newMessage.setMessage_type("users");
+    newMessage.setData(new Gson().toJson(users.toArray()));
+    return broadcaster.broadcast(newMessage);
   }
 
   @OnMessage
@@ -51,6 +59,21 @@ public class UpdateWebSocket {
     MessageEntity newMessage = new MessageEntity();
     JSONObject messageObject = new JSONObject(message);
 
+    if (messageObject.get("message_type").toString().equals("login")) {
+      UserDto newUser = new Gson().fromJson(messageObject.get("data").toString(), UserDto.class);
+      if (!users.contains(newUser)) {
+        users.add(newUser);
+      }
+      newMessage.setMessage_type("login");
+      messageObject.put("data", new Gson().toJson(users.toArray()));
+      return broadcaster.broadcast(messageObject.toString());
+    }
+    if (messageObject.get("message_type").toString().equals("logout")) {
+      UserDto existingUser = new Gson().fromJson(messageObject.get("data").toString(), UserDto.class);
+      users.remove(existingUser);
+      return broadcaster.broadcast(String.format("%s", message));
+    }
+
     newMessage.setAccount_name(messageObject.optString("account_name", "System"));
     newMessage.setData(messageObject.get("data").toString());
     newMessage.setDate(Long.parseLong(messageObject.optString("date", String.valueOf(System.currentTimeMillis()))));
@@ -58,7 +81,7 @@ public class UpdateWebSocket {
     newMessage.setId(UUID.randomUUID().toString());
     newMessage.setVersion(messageObject.optString("version", "System"));
     messageRepository.save(newMessage);
-    // messageHistory.add(message);
+
     return broadcaster.broadcast(String.format("%s", message));
   }
 

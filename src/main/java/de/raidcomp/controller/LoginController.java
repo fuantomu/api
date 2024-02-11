@@ -48,9 +48,6 @@ public class LoginController {
 
   @Post("/delete/{host}")
   public void deleteLoginAge(String host) {
-    Optional<LoginEntity> userLogin = loginRepository.findById(host);
-    if (!userLogin.isEmpty()) {
-      loginRepository.delete(userLogin.get());
-    }
+    loginRepository.deleteById(host);
   }
 }
