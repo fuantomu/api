@@ -1,7 +1,9 @@
 package de.raidcomp.websocket;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
@@ -9,8 +11,8 @@ import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 
-import de.raidcomp.controller.dto.UserDto;
 import de.raidcomp.data.entity.MessageEntity;
+import de.raidcomp.data.entity.UserEntity;
 import de.raidcomp.data.repository.MessageRepository;
 import io.micronaut.websocket.WebSocketBroadcaster;
 import io.micronaut.websocket.WebSocketSession;
@@ -31,7 +33,9 @@ public class UpdateWebSocket {
   private final WebSocketBroadcaster broadcaster;
   private final MessageRepository messageRepository;
 
-  private List<UserDto> users = new ArrayList<UserDto>();
+  final Integer LOGOUT_TIME = 60000;
+
+  private List<UserEntity> users = new ArrayList<UserEntity>();
 
   public UpdateWebSocket(WebSocketBroadcaster broadcaster, MessageRepository messageRepository) {
     this.broadcaster = broadcaster;
@@ -53,15 +57,39 @@ public class UpdateWebSocket {
       WebSocketSession session) {
 
     log("onMessage", session);
-    if (message.equals("Ping")) {
-      return broadcaster.broadcast("{\"message_type\": \"heartbeat\"}");
-    }
+
     MessageEntity newMessage = new MessageEntity();
     JSONObject messageObject = new JSONObject(message);
 
+    if (messageObject.get("message_type").toString().equals("heartbeat")) {
+      Optional<UserEntity> existingUser = users.stream()
+          .filter(user -> user.getHost().equals(messageObject.get("host"))).findFirst();
+      if (existingUser.isPresent()) {
+        existingUser.get().setLast_message(System.currentTimeMillis());
+      }
+
+      Iterator<UserEntity> iterator = users.iterator();
+      while (iterator.hasNext()) {
+        UserEntity user = iterator.next();
+        if (System.currentTimeMillis() - user.getLast_message() >= LOGOUT_TIME) {
+          messageObject.put("message_type", "logout");
+          messageObject.put("data",
+              new JSONObject().put("host", user.getHost()).put("username", user.getUsername()));
+          messageObject.put("socketId", user.getHost());
+          iterator.remove();
+          return broadcaster.broadcast(messageObject.toString());
+
+        }
+      }
+
+      return broadcaster.broadcast("{\"message_type\": \"heartbeat\"}");
+    }
+
     if (messageObject.get("message_type").toString().equals("login")) {
-      UserDto newUser = new Gson().fromJson(messageObject.get("data").toString(), UserDto.class);
-      if (!users.contains(newUser)) {
+      UserEntity newUser = new Gson().fromJson(messageObject.get("data").toString(), UserEntity.class);
+
+      if (users.stream().filter(user -> user.getHost().equals(newUser.getHost())).findFirst().isEmpty()) {
+        newUser.setLast_message(System.currentTimeMillis());
         users.add(newUser);
       }
       newMessage.setMessage_type("login");
@@ -69,7 +97,7 @@ public class UpdateWebSocket {
       return broadcaster.broadcast(messageObject.toString());
     }
     if (messageObject.get("message_type").toString().equals("logout")) {
-      UserDto existingUser = new Gson().fromJson(messageObject.get("data").toString(), UserDto.class);
+      UserEntity existingUser = new Gson().fromJson(messageObject.get("data").toString(), UserEntity.class);
       users.remove(existingUser);
       return broadcaster.broadcast(String.format("%s", message));
     }
