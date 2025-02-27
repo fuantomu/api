@@ -22,6 +22,7 @@ public enum WarcraftPlayerClass {
   SHAMAN("Shaman"),
   WARLOCK("Warlock"),
   WARRIOR("Warrior"),
+  MONK("Monk"),
   UNKNOWN("Unknown");
 
   private final String value;
@@ -52,6 +53,8 @@ public enum WarcraftPlayerClass {
         return WARLOCK;
       case "WARRIOR":
         return WARRIOR;
+      case "MONK":
+        return MONK;
       default:
         return UNKNOWN;
     }

@@ -24,6 +24,7 @@ public enum WarcraftPlayerRace {
   TAUREN("Tauren"),
   BLOODELF("Bloodelf"),
   GOBLIN("Goblin"),
+  PANDAREN("Pandaren"),
   UNKNOWN("Unknown");
 
   private final String value;
@@ -58,6 +59,8 @@ public enum WarcraftPlayerRace {
         return BLOODELF;
       case "GOBLIN":
         return GOBLIN;
+      case "PANDAREN":
+        return PANDAREN;
       default:
         return UNKNOWN;
     }

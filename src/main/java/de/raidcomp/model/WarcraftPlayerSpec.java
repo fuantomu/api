@@ -50,6 +50,9 @@ public enum WarcraftPlayerSpec {
   WARRIOR_ARMS("WarriorArms", WarcraftPlayerClass.WARRIOR, MELEE_DPS),
   WARRIOR_FURY("WarriorFury", WarcraftPlayerClass.WARRIOR, MELEE_DPS),
   WARRIOR_PROTECTION("WarriorProtection", WarcraftPlayerClass.WARRIOR, TANK),
+  MONK_BREWMASTER("MonkBrewmaster", WarcraftPlayerClass.MONK, TANK),
+  MONK_WINDWALKER("MonkWindwalker", WarcraftPlayerClass.MONK, MELEE_DPS),
+  MONK_MISTWEAVER("MonkMistweaver", WarcraftPlayerClass.MONK, HEALER),
   UNKNOWN("Unknown", WarcraftPlayerClass.UNKNOWN, WarcraftRole.UNKNOWN),
   ;
 
@@ -138,6 +141,12 @@ public enum WarcraftPlayerSpec {
         return WARRIOR_FURY;
       case "ARMS":
         return WARRIOR_ARMS;
+      case "WINDWALKER":
+        return MONK_WINDWALKER;
+      case "BREWMASTER":
+        return MONK_BREWMASTER;
+      case "MISTWEAVER":
+        return MONK_MISTWEAVER;
       default:
         return UNKNOWN;
     }
