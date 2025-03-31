@@ -17,13 +17,15 @@ import jakarta.validation.constraints.NotNull;
 
 @Serdeable
 public record PlayerDto(
-        @NotNull String id,
-        @NotNull String name,
-        @NotNull @Deserializable(using = WarcraftPlayerClassSerde.class) WarcraftPlayerClass class_name,
-        @Nullable @Deserializable(using = WarcraftPlayerSpecSerde.class) WarcraftPlayerSpec spec,
-        @Nullable @Deserializable(using = WarcraftPlayerRaceSerde.class) WarcraftPlayerRace race,
-        @NotNull @Deserializable(using = InviteStatusSerde.class) InviteStatus status,
-        @Nullable @Deserializable(using = GroupIdSerde.class) GroupId group_id,
-        @Nullable String main,
-        @Nullable String alt) {
+                @NotNull String id,
+                @NotNull String name,
+                @NotNull @Deserializable(using = WarcraftPlayerClassSerde.class) WarcraftPlayerClass class_name,
+                @Nullable @Deserializable(using = WarcraftPlayerSpecSerde.class) WarcraftPlayerSpec spec,
+                @Nullable @Deserializable(using = WarcraftPlayerRaceSerde.class) WarcraftPlayerRace race,
+                @NotNull @Deserializable(using = InviteStatusSerde.class) InviteStatus status,
+                @Nullable @Deserializable(using = GroupIdSerde.class) GroupId group_id,
+                @Nullable String main,
+                @Nullable String alt,
+                @Nullable String role,
+                @Nullable String swap) {
 }

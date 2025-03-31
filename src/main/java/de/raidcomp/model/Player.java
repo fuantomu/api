@@ -11,13 +11,15 @@ import io.micronaut.core.annotation.Nullable;
 import io.micronaut.serde.annotation.Serdeable.Serializable;
 
 public record Player(
-        String id,
-        String name,
-        @JsonProperty("class") @Serializable(using = WarcraftPlayerClassSerde.class) WarcraftPlayerClass class_name,
-        @Nullable @Serializable(using = WarcraftPlayerSpecSerde.class) WarcraftPlayerSpec spec,
-        @Nullable @Serializable(using = WarcraftPlayerRaceSerde.class) WarcraftPlayerRace race,
-        @Serializable(using = InviteStatusSerde.class) InviteStatus status,
-        @Nullable @Serializable(using = GroupIdSerde.class) GroupId group_id,
-        @Nullable String main,
-        @Nullable String alt) {
+                String id,
+                String name,
+                @JsonProperty("class") @Serializable(using = WarcraftPlayerClassSerde.class) WarcraftPlayerClass class_name,
+                @Nullable @Serializable(using = WarcraftPlayerSpecSerde.class) WarcraftPlayerSpec spec,
+                @Nullable @Serializable(using = WarcraftPlayerRaceSerde.class) WarcraftPlayerRace race,
+                @Serializable(using = InviteStatusSerde.class) InviteStatus status,
+                @Nullable @Serializable(using = GroupIdSerde.class) GroupId group_id,
+                @Nullable String main,
+                @Nullable String alt,
+                @Nullable String role,
+                @Nullable String swap) {
 }

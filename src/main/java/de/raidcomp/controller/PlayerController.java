@@ -53,6 +53,8 @@ public class PlayerController {
     newPlayer.setSpec(body.player().spec().toString());
     newPlayer.setStatus(body.player().status().toString());
     newPlayer.setAlt(body.player().alt());
+    newPlayer.setRole(body.player().role());
+    newPlayer.setSwap(body.player().swap());
 
     Optional<PlayerEntity> player = playerRepository.findById(playerId);
 
@@ -80,6 +82,8 @@ public class PlayerController {
       newPlayer.setSpec(playerDto.spec().toString());
       newPlayer.setStatus(playerDto.status().toString());
       newPlayer.setAlt(playerDto.alt());
+      newPlayer.setRole(playerDto.role());
+      newPlayer.setSwap(playerDto.swap());
 
       Optional<PlayerEntity> existingPlayer = playerRepository.findById(newPlayer.getId());
       if (existingPlayer.isEmpty()) {

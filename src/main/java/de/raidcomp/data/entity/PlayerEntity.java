@@ -34,4 +34,8 @@ public class PlayerEntity {
   private String main;
 
   private String alt;
+
+  private String role;
+
+  private String swap;
 }
