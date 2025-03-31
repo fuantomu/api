@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.persistence.Entity;
 
 @Getter
 @Setter

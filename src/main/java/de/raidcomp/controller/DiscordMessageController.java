@@ -2,14 +2,11 @@ package de.raidcomp.controller;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.Comparator;
 
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
-import io.micronaut.http.annotation.QueryValue;
 import jakarta.validation.Valid;
 import de.raidcomp.controller.dto.save.SaveDiscordMessageDto;
 import de.raidcomp.data.entity.DiscordMessageEntity;
